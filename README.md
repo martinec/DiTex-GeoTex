@@ -1,10 +1,32 @@
 # GeoTex
 > Create electronic dictionaries (DELA) of toponyms using GeoNames DB
 
+## Installation
+
+- You need first to create the GeoNames.sqlite database, for that install sqlite3, e.g. under Debian or Ubuntu :
+
+```
+$ sudo apt-get install sqlite3  
+```
+
+Then,  type the following command to create de DB:
+
+```
+$ GeoNamesDB/bootstrap.sh
+```
+
+- In order to run the ```GeoTex.pl``` script you'll need a Perl environment with following modules installed from distro packages or from CPAN:
+
+```
+Text::Unaccent::PurePerl
+DBI
+GIS::Distance
+```
+
 ## Usage
 
 ```
-Usage: GeoTex.pl <geonames.org sqlite database file> <dictionary type>
+Usage: GeoTex.pl GeoNames.sqlite <dictionary type>
  1: World Countries (+Country)
  2: World Capitals Cities (+City+Capital)
  3: World Other Cities with population >= 5000 (+City)
@@ -20,7 +42,7 @@ Usage: GeoTex.pl <geonames.org sqlite database file> <dictionary type>
 ## Example
 
 ```
-./GeoTex.pl ./GeoNamesDB/GeoNames12.db 1 > examples/DiTex-WorldCountries.dic
+./GeoTex.pl ./GeoNamesDB/GeoNames.sqlite 1 > examples/DiTex-WorldCountries.dic
 ```
 
 ```
@@ -30,8 +52,8 @@ PeoplesRepublic of Montenegro,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\
 People's Republic of Montenegro,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=+Uid=GN03194884
 République du Monténégro,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=fr+Uid=GN03194884
 Crna Gora,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=sr+Uid=GN03194884
-Montenegro,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=de|en|es|it|pt|fr+Uid=GN03194884
-Republika Crna Gora,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=|sr+Uid=GN03194884
+Montenegro,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=de;en;es;it;pt;fr+Uid=GN03194884
+Republika Crna Gora,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=;sr+Uid=GN03194884
 Republic of Montenegro,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=en+Uid=GN03194884
 Republique du Montenegro,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=fr+Uid=GN03194884
 Monténégro,Montenegro.N+Toponym+Country+CountryISO=ME+Lat=42\.5+Lng=19\.3+Lang=fr+Uid=GN03194884
