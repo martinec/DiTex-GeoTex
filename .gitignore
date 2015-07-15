@@ -133,6 +133,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# SQLite databases
+# SQLite database related files
 *.db
+*.sqlite
+*.txt
 
