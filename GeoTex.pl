@@ -170,7 +170,7 @@ sub getAlternateNames($$$){
       # split by , sort and join by |
       if(defined  $entries->{$altname}){
         my @langs = split(/,/, $entries->{$altname});
-        $entries->{$altname} = join("|", uniq(sort(@langs)));
+        $entries->{$altname} = join(";", uniq(sort(@langs)));
       }
       # generate alternative fingerprint name from alternative name
       my $fpaltname = fingerprint($altname);
@@ -183,7 +183,7 @@ sub getAlternateNames($$$){
          # split by , sort and join by |
         if(defined  $entries->{$fpaltname}){
            my @fplangs = split(/,/, $entries->{$fpaltname});
-           $entries->{$fpaltname} = join("|", uniq(sort(@fplangs)));
+           $entries->{$fpaltname} = join(";", uniq(sort(@fplangs)));
         }
       }
     }
