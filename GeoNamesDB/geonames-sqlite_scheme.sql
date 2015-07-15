@@ -2,7 +2,7 @@
 -- geonames-sqlite.sql : Script for creating tables from geonames.org
 -- ======================================================================  
 -- V 1.1  2012 by Cristian Martinez <me-at-martinec.org>
--- WTFPL License
+-- You can redistribute and/or modify this under the terms of the WTFPL
 -- ======================================================================
 
 -- SQLite--------------------B

@@ -212,7 +212,7 @@ sub dic_WorldCountries($){
        $bSemantic =  $DT_S  .
                mSemantic .
                mCountry  .
-               gCISO  . $c->{country_iso2}    .
+               gCISO  . $c->{country_iso}    .
                gLAT  . escape_num($c->{geoname_lat})  .
                gLONG . escape_num($c->{geoname_lng});
        $entries{$country} = 'en';
@@ -254,7 +254,7 @@ sub fetchprint_sql($$$){
        $bSemantic =  $DT_S  .
                mSemantic .
                $tSemantic .
-               gCISO  . $c->{country_iso2} .
+               gCISO  . $c->{country_iso} .
                gLAT  . escape_num($c->{geoname_lat})  .
                gLONG . escape_num($c->{geoname_lng});
        $entries{$geoname}  = 'en';
@@ -533,7 +533,7 @@ sub fetchprint_hierarchy_sql($$$){
        my $alternateNames;
        $gid       = $c->{geoname_id};
        $id        = sprintf("GN%.8d",$c->{geoname_id}) ;
-       $country   = $c->{country_iso2};
+       $country   = $c->{country_iso};
        $country_id= sprintf("GN%.8d",$c->{country_id});
        $admin1    = {'code' => $c->{geoname_admin1}, 'id'  => "" , 'name' => ""};
        $admin2    = {'code' => $c->{geoname_admin2}, 'id'  => "" , 'name' => ""};
@@ -609,12 +609,12 @@ sub dic_CapitalCities($){
   my $dbh = shift;
   # get city info
   my $sql = "SELECT g.geoname_id, g.geoname, g.geoname_asciiname, g.geoname_altername,
-             g.geoname_lat, g.geoname_lng, g.country_iso2, g.geoname_fclass, g. geoname_fcode,
+             g.geoname_lat, g.geoname_lng, g.country_iso, g.geoname_fclass, g. geoname_fcode,
              g.geoname_admin1, g.geoname_admin2, g.geoname_admin3, g.geoname_admin4,
              c.country_languages, c.geoname_id as country_id FROM  tab_geoname as g , tab_country as c
               WHERE g.geoname_fclass IS 'P'
               AND   g.geoname_fcode  IN ('PPLC','PPLCH')
-              AND  c.country_iso2 = g.country_iso2";
+              AND  c.country_iso = g.country_iso";
   my $tSemantic = mCity . mCapital;
   fetchprint_sql  $dbh,$sql, $tSemantic;
 }
@@ -706,24 +706,24 @@ sub dic_NotableCities($){
   my $dbh = shift;
   # get city info
   my $sql = "SELECT g.geoname_id, g.geoname, g.geoname_asciiname, g.geoname_altername,
-             g.geoname_lat, g.geoname_lng, g.country_iso2, g.geoname_fclass, g. geoname_fcode,
+             g.geoname_lat, g.geoname_lng, g.country_iso, g.geoname_fclass, g. geoname_fcode,
              g.geoname_admin1, g.geoname_admin2, g.geoname_admin3, g.geoname_admin4,
              c.country_languages, c.geoname_id as country_id FROM  tab_geoname as g , tab_country as c
               WHERE g.geoname_fclass IS 'P'
-              AND  g.country_iso2 = 'MA'
+              AND  g.country_iso = 'MA'
               AND  g.geoname_fcode  NOT IN ('PPLC','PPLCH')
               AND  g.geoname_popult >= $MIN_POPULATION
-              AND  c.country_iso2 = g.country_iso2";
+              AND  c.country_iso = g.country_iso";
   my $tSemantic = mCity;
   fetchprint_hierarchy_sql  $dbh,$sql, $tSemantic;
 }
 #  SELECT g.geoname_id, g.geoname, g.geoname_asciiname,
-#             g.geoname_lat, g.geoname_lng, g.country_iso2,
+#             g.geoname_lat, g.geoname_lng, g.country_iso,
 #             c.country_languages FROM  tab_geoname as g , tab_country as c
 #              WHERE geoname_fclass IS 'P'
 #              AND   geoname_fcode  IN  ('PPL')
 #              AND   geoname_popult >= $MIN_POPULATION
-#              AND  c.country_iso2 = g.country_iso2";
+#              AND  c.country_iso = g.country_iso";
 # ======================================================================
 # dic_AdminDivisions:
 sub dic_AdminDivisions($){
@@ -780,7 +780,7 @@ sub dic_Mountains($){
   my $dbh = shift;
   # get city info
   my $sql = "SELECT * from  tab_geoname
-            WHERE country_iso2 IS 'CM'
+            WHERE country_iso IS 'CM'
             AND geoname_fclass IS 'T'
             AND (geoname_fcode  IS 'MT' OR
                  geoname_fcode  IS 'MTS')
@@ -878,7 +878,7 @@ $sthAdmin2  =  $dbh->prepare($sqlAdmin2) || die $DBI::errstr;
 $sqlAdmin3 = "SELECT geoname_id, geoname FROM tab_geoname WHERE
                geoname_fclass IS 'A' AND
                geoname_fcode  IS 'ADM3' AND
-               country_iso2 = ? AND
+               country_iso = ? AND
                geoname_admin1  = ? AND
                geoname_admin2  = ? AND
                geoname_admin3  = ?";
@@ -886,41 +886,41 @@ $sthAdmin3  =  $dbh->prepare($sqlAdmin3) || die $DBI::errstr;
 $sqlAdmin4 = "SELECT geoname_id, geoname FROM tab_geoname WHERE
                geoname_fclass IS 'A' AND
                geoname_fcode  IS 'ADM4' AND
-               country_iso2 = ? AND
+               country_iso = ? AND
                geoname_admin1  = ? AND
                geoname_admin2  = ? AND
                geoname_admin3  = ? AND
                geoname_admin4  = ?";
 $sthAdmin4  =  $dbh->prepare($sqlAdmin4) || die $DBI::errstr;
-#$sqlPostalCode = "SELECT country_iso2, GROUP_CONCAT(postalcode) as group_postalcode,  geoname, admin1,
+#$sqlPostalCode = "SELECT country_iso, GROUP_CONCAT(postalcode) as group_postalcode,  geoname, admin1,
 #             geoname_admin1, admin1, geoname_admin2, admin2, geoname_admin3, admin3,
 #             postalcode_lat, postalcode_lng
 #             FROM tab_postalcode WHERE
-#             country_iso2 = ?  AND
+#             country_iso = ?  AND
 #             geoname = ?
-#             GROUP BY country_iso2, geoname, admin1, geoname_admin1, admin2, geoname_admin2, admin3, geoname_admin3, postalcode_lat, postalcode_lng";
-$sqlPostalCode = "SELECT country_iso2, GROUP_CONCAT(postalcode) as group_postalcode,  geoname, admin1,
+#             GROUP BY country_iso, geoname, admin1, geoname_admin1, admin2, geoname_admin2, admin3, geoname_admin3, postalcode_lat, postalcode_lng";
+$sqlPostalCode = "SELECT country_iso, GROUP_CONCAT(postalcode) as group_postalcode,  geoname, admin1,
                  geoname_admin1, admin1, geoname_admin2, admin2, geoname_admin3, admin3,
                  postalcode_lat, postalcode_lng
                  FROM tab_postalcode WHERE
-                 country_iso2 = ?  AND
+                 country_iso = ?  AND
                  (geoname = ? OR
                   geoname IN (SELECT DISTINCT(altname) FROM tab_altname
                              WHERE geoname_id = ? AND
                              altname_collq <> 1 AND
                             (altname_lang IN ('en','es','fr','pt','it','de',?) OR
                              length(altname_lang) = 0)))
-                 GROUP BY country_iso2, geoname, admin1, geoname_admin1, admin2,
+                 GROUP BY country_iso, geoname, admin1, geoname_admin1, admin2,
                  geoname_admin2, admin3, geoname_admin3, postalcode_lat, postalcode_lng";
 $sthPostalCode = $dbh->prepare($sqlPostalCode) || die $DBI::errstr;
-$sqlClosestPostalCode  = "SELECT country_iso2, GROUP_CONCAT(postalcode) as group_postalcode,  geoname, admin1,
+$sqlClosestPostalCode  = "SELECT country_iso, GROUP_CONCAT(postalcode) as group_postalcode,  geoname, admin1,
              geoname_admin1, admin1, geoname_admin2, admin2, geoname_admin3, admin3,
              postalcode_lat, postalcode_lng
              FROM tab_postalcode WHERE
-             country_iso2 = ? AND (
+             country_iso = ? AND (
              postalcode_lng >= ? AND postalcode_lat >= ? AND
              postalcode_lng <= ? AND postalcode_lat <= ?)
-             GROUP BY country_iso2, geoname, admin1, geoname_admin1, admin2,
+             GROUP BY country_iso, geoname, admin1, geoname_admin1, admin2,
              geoname_admin2, admin3, geoname_admin3, postalcode_lat, postalcode_lng";
 $sthClosestPostalCode =  $dbh->prepare($sqlClosestPostalCode) || die $DBI::errstr;
 switch ($dictype){
