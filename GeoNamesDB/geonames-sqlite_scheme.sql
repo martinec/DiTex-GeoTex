@@ -213,5 +213,5 @@ CREATE INDEX IF NOT EXISTS IDX_PADMIN2 ON tab_postalcode(admin2);
 CREATE INDEX IF NOT EXISTS IDX_PGADMIN2 ON tab_postalcode(geoname_admin2);
 CREATE INDEX IF NOT EXISTS IDX_PADMIN3 ON tab_postalcode(admin3);
 CREATE INDEX IF NOT EXISTS IDX_PGADMIN3 ON tab_postalcode(geoname_admin3);
-CREATE INDEX IF NOT EXISTS IDX_PLAT ON tab_postalcode(postalcode_lat) ASC;
-CREATE INDEX IF NOT EXISTS IDX_PLONG ON tab_postalcode(postalcode_lng) ASC;
+CREATE INDEX IF NOT EXISTS IDX_PLAT ON tab_postalcode(postalcode_lat);
+CREATE INDEX IF NOT EXISTS IDX_PLONG ON tab_postalcode(postalcode_lng);
