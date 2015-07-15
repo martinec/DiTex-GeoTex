@@ -15,7 +15,7 @@ Then,  type the following command to create de DB:
 $ GeoNamesDB/bootstrap.sh
 ```
 
-- In order to run the ```GeoTex.pl``` script you'll need a Perl environment with following modules installed from distro packages or from CPAN:
+- In order to run the ```GeoTex.pl``` script you'll need a Perl environment with the following modules installed from your distro packages or from CPAN:
 
 ```
 Text::Unaccent::PurePerl
