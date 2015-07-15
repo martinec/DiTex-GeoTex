@@ -1,7 +1,7 @@
 -- ======================================================================  
 -- geonames-sqlite.sql : Script for creating tables from geonames.org
 -- ======================================================================  
--- V 1.1  2012 by Cristian Martinez <me@martinec.org>
+-- V 1.1  2012 by Cristian Martinez <me-at-martinec.org>
 -- WTFPL License
 -- ======================================================================
 

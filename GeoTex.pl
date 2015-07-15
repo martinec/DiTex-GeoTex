@@ -7,7 +7,7 @@
 # under the terms of either: the GNU General Public License v3 or the
 # Perl Artistic License.
 # ======================================================================
-# Copyright 2011, by Cristian Martinez <me@martinec.org>
+# Copyright 2011, by Cristian Martinez <me-at-martinec.org>
 # ======================================================================
 use strict;
 use warnings;
