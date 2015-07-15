@@ -1,0 +1,14 @@
+Some problems to fix :
+cat alternateNames.txt | grep  "\"" | grep "'"
+
+sed -i '98730d' allCountries.txt
+sed -i "s/”/''/g" allCountries.txt
+
+sed -i '/^ *$/d' alternateNames.txt
+sed -i '/^ *$/d' admin2Codes.txt
+
+sed -i "s/’/'/g ; s/‘/'/g"  allCountries.txt
+sed -i "s/’/'/g ; s/‘/'/g"  admin1CodesASCII.txt
+sed -i "s/’/'/g ; s/‘/'/g"  alternateNames.txt
+sed -i "s/’/'/g ; s/‘/'/g"  admin2Codes.txt
+sed -i "s/’/'/g ; s/‘/'/g"  allPostalCodes.txt
