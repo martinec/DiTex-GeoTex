@@ -21,6 +21,7 @@ $ GeoNamesDB/bootstrap.sh
 Text::Unaccent::PurePerl
 DBI
 GIS::Distance
+DBD::SQLite
 ```
 
 ## Usage
