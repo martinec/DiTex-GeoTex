@@ -4,7 +4,7 @@
 ## Usage
 
 ```
-Usage: ./geo2dic.pl <geonames.org sqlite database file> <dictionary type>
+Usage: GeoTex.pl <geonames.org sqlite database file> <dictionary type>
  1: World Countries (+Country)
  2: World Capitals Cities (+City+Capital)
  3: World Other Cities with population >= 5000 (+City)
