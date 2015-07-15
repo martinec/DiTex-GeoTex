@@ -1,8 +1,8 @@
 # allCountries.zip
 wget -N http://download.geonames.org/export/dump/allCountries.zip 
-rm allCountries.txt
+rm -f allCountries.txt
 unzip allCountries.zip
-rm  allCountries.zip
+rm -f  allCountries.zip
 #sed -i '/\x27/s/"/\x27\x27/g'  allCountries.txt
 #sed -i '/”/s/"/\x27\x27/g'  allCountries.txt
 #sed -i '/[^\t]*"[^\t]*[^\t]*"/s/"/\x27\x27/g' allCountries.txt
@@ -11,9 +11,9 @@ sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' allCountries.txt
 
 # alternateNames.zip
 wget -N http://download.geonames.org/export/dump/alternateNames.zip
-rm alternateNames.txt
+rm -f alternateNames.txt
 unzip alternateNames.zip
-rm alternateNames.zip
+rm -f alternateNames.zip
 #sed -i '/\x27/s/"/\x27\x27/g' alternateNames.txt
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' alternateNames.txt
 
@@ -37,9 +37,9 @@ sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' featureCodes_en.txt
 
 # hierarchy
 wget -N http://download.geonames.org/export/dump/hierarchy.zip
-rm hierarchy.txt
+rm -f hierarchy.txt
 unzip hierarchy.zip
-rm hierarchy.zip
+rm -f hierarchy.zip
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' hierarchy.txt
 
 # timeZones
@@ -50,7 +50,7 @@ sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' timeZones.txt
 # countryInfo
 wget -N -O countryData.txt http://download.geonames.org/export/dump/countryInfo.txt 
 cat countryData.txt | grep -v "^#" > countryInfo.txt
-rm countryData.txt
+rm -f countryData.txt
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' countryInfo.txt
 
 
@@ -69,8 +69,8 @@ wget -N -O allPostalCodes.zip http://download.geonames.org/export/zip/allCountri
 unzip allPostalCodes.zip -d /tmp
 mv /tmp/allCountries.txt ./allPostalCodes.txt
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' allPostalCodes.txt
-rm allCountries.zip
+rm -f allCountries.zip
 
-rm GeoNames12.db
-sqlite3 GeoNames12.db < geonames-sqlite_scheme.sql 
-sqlite3 GeoNames12.db < geonames-sqlite_load.sql
+rm -f GeoNames.sqlite
+sqlite3 GeoNames.sqlite < geonames-sqlite_scheme.sql 
+sqlite3 GeoNames.sqlite < geonames-sqlite_load.sql
