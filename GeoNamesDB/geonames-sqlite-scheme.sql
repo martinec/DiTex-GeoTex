@@ -1,8 +1,7 @@
 -- ======================================================================  
 -- geonames-sqlite.sql : Script for creating tables from geonames.org
 -- ======================================================================  
--- V 1.1  2012 by Cristian Martinez <me-at-martinec.org>
--- You can redistribute and/or modify this under the terms of the WTFPL
+-- V 1.2  2017 by Cristian Martinez <me@martinec.org>
 -- ======================================================================
 
 -- SQLite--------------------B
@@ -18,17 +17,17 @@
 --
 CREATE TABLE IF NOT EXISTS tab_geoname (
   geoname_id          INTEGER NOT NULL PRIMARY KEY,
-  geoname             VARCHAR(200),
+  geoname_name        VARCHAR(200),
   geoname_asciiname   VARCHAR(200),
-  geoname_altername   VARCHAR(5000),
+  geoname_altername   VARCHAR(10000),
   geoname_lat         DECIMAL(10,7),
   geoname_lng         DECIMAL(10,7),
   geoname_fclass      CHAR(1),
   geoname_fcode       VARCHAR(10),
   country_iso         CHAR(2),
-  geoname_altcod      VARCHAR(60),
+  geoname_altcod      VARCHAR(200),
   geoname_admin1      VARCHAR(20),
-  geoname_admin2      VARCHAR(80),
+  geoname_admin2      VARCHAR(20),
   geoname_admin3      VARCHAR(20),
   geoname_admin4      VARCHAR(20),
   geoname_popult      INTEGER,
@@ -54,7 +53,7 @@ CREATE TABLE IF NOT EXISTS tab_altname (
   altname_id          INTEGER NOT NULL PRIMARY KEY,
   geoname_id          INTEGER,
   altname_lang        VARCHAR(7) DEFAULT NULL,
-  altname             VARCHAR(200) DEFAULT NULL,
+  altname_name        VARCHAR(400) DEFAULT NULL,
   altname_prefr       SMALLINT DEFAULT 0,
   altname_short       SMALLINT DEFAULT 0,
   altname_collq       SMALLINT DEFAULT 0,
@@ -63,7 +62,7 @@ CREATE TABLE IF NOT EXISTS tab_altname (
 
 CREATE INDEX IF NOT EXISTS IDX_GEONAME_ID ON tab_altname(geoname_id);
 CREATE INDEX IF NOT EXISTS IDX_ALTNAME_LANG ON tab_altname(altname_lang);
-CREATE INDEX IF NOT EXISTS IDX_ALTNAME ON tab_altname(altname);
+CREATE INDEX IF NOT EXISTS IDX_ALTNAME ON tab_altname(altname_name);
 
 --
 -- tab_country
@@ -73,7 +72,7 @@ CREATE TABLE IF NOT EXISTS tab_country (
   country_iso3        CHAR(3),
   country_isonum      INTEGER,
   country_fipscod     VARCHAR(3),
-  country             VARCHAR(200),
+  country_name        VARCHAR(200),
   country_capital     VARCHAR(200),
   country_areaskm     DOUBLE,
   country_popult      INTEGER,
@@ -98,7 +97,7 @@ CREATE INDEX IF NOT EXISTS IDX_CGID on tab_country(geoname_id);
 CREATE TABLE IF NOT EXISTS tab_division (
   country_iso         CHAR(2),
   division_iso        CHAR(6) NOT NULL PRIMARY KEY,
-  division            VARCHAR(200),
+  division_name       VARCHAR(200),
   division_asciiname  VARCHAR(200),
   geoname_fclass      CHAR(1),
   geoname_fcode       VARCHAR(10),  
@@ -123,13 +122,13 @@ CREATE TABLE IF NOT EXISTS tab_language(
 --
 CREATE TABLE IF NOT EXISTS tab_admin1 (
   admin1_code         VARCHAR(23),
-  admin1              TEXT,
+  admin1_name         TEXT,
   admin1_asciiname    TEXT,
   geoname_id          INTEGER NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS IDX_ADMIN1_CODE ON tab_admin1(admin1_code);
-CREATE INDEX IF NOT EXISTS IDX_ADMIN1  ON tab_admin1(admin1);
+CREATE INDEX IF NOT EXISTS IDX_ADMIN1  ON tab_admin1(admin1_name);
 CREATE INDEX IF NOT EXISTS IDX_ADMIN1_ASCII  ON tab_admin1(admin1_asciiname);
 CREATE INDEX IF NOT EXISTS IDX_ADMIN1_GID ON tab_admin1(geoname_id);
 
@@ -139,13 +138,13 @@ CREATE INDEX IF NOT EXISTS IDX_ADMIN1_GID ON tab_admin1(geoname_id);
 --
 CREATE TABLE IF NOT EXISTS tab_admin2 (
   admin2_code         VARCHAR(104),
-  admin2              TEXT,
+  admin2_name         TEXT,
   admin2_asciiname    TEXT,
   geoname_id          INTEGER NOT NULL 
 );
 
 CREATE INDEX IF NOT EXISTS IDX_ADMIN2_CODE ON tab_admin2(admin2_code);
-CREATE INDEX IF NOT EXISTS IDX_ADMIN2  ON tab_admin2(admin2);
+CREATE INDEX IF NOT EXISTS IDX_ADMIN2  ON tab_admin2(admin2_name);
 CREATE INDEX IF NOT EXISTS IDX_ADMIN2_ASCII  ON tab_admin2(admin2_asciiname);
 CREATE INDEX IF NOT EXISTS IDX_ADMIN2_GID ON tab_admin2(geoname_id);
 
@@ -184,7 +183,7 @@ CREATE TABLE IF NOT EXISTS tab_timezone (
 --
 CREATE TABLE IF NOT EXISTS tab_continent (
   continent_code CHAR(2),
-  continent      VARCHAR(20),
+  continent_name VARCHAR(20),
   geoname_id     INTEGER NOT NULL PRIMARY KEY
 );
 
@@ -192,12 +191,12 @@ CREATE TABLE IF NOT EXISTS tab_continent (
 CREATE TABLE IF NOT EXISTS tab_postalcode(
   country_iso         CHAR(2),
   postalcode          VARCHAR(20),
-  geoname             VARCHAR(200),
-  admin1              TEXT,
+  geoname_name        VARCHAR(200),
+  admin1_name         TEXT,
   geoname_admin1      VARCHAR(20),
-  admin2              TEXT,
+  admin2_name         TEXT,
   geoname_admin2      VARCHAR(80),
-  admin3              TEXT,
+  admin3_name         TEXT,
   geoname_admin3      VARCHAR(20),
   postalcode_lat      DECIMAL(10,7),
   postalcode_lng      DECIMAL(10,7),
@@ -206,12 +205,12 @@ CREATE TABLE IF NOT EXISTS tab_postalcode(
 
 CREATE INDEX IF NOT EXISTS IDX_PISO2 ON tab_postalcode(country_iso);
 CREATE INDEX IF NOT EXISTS IDX_POSTALCODE ON tab_postalcode(postalcode);
-CREATE INDEX IF NOT EXISTS IDX_GEONAME ON tab_postalcode(geoname);
-CREATE INDEX IF NOT EXISTS IDX_PADMIN1 ON tab_postalcode(admin1);
+CREATE INDEX IF NOT EXISTS IDX_GEONAME ON tab_postalcode(geoname_name);
+CREATE INDEX IF NOT EXISTS IDX_PADMIN1 ON tab_postalcode(admin1_name);
 CREATE INDEX IF NOT EXISTS IDX_PGADMIN1 ON tab_postalcode(geoname_admin1);
-CREATE INDEX IF NOT EXISTS IDX_PADMIN2 ON tab_postalcode(admin2);
+CREATE INDEX IF NOT EXISTS IDX_PADMIN2 ON tab_postalcode(admin2_name);
 CREATE INDEX IF NOT EXISTS IDX_PGADMIN2 ON tab_postalcode(geoname_admin2);
-CREATE INDEX IF NOT EXISTS IDX_PADMIN3 ON tab_postalcode(admin3);
+CREATE INDEX IF NOT EXISTS IDX_PADMIN3 ON tab_postalcode(admin3_name);
 CREATE INDEX IF NOT EXISTS IDX_PGADMIN3 ON tab_postalcode(geoname_admin3);
 CREATE INDEX IF NOT EXISTS IDX_PLAT ON tab_postalcode(postalcode_lat);
 CREATE INDEX IF NOT EXISTS IDX_PLONG ON tab_postalcode(postalcode_lng);

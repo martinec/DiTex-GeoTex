@@ -1,8 +1,7 @@
 -- ======================================================================  
 -- geonames-sqlite.sql : Script for creating tables from geonames.org
 -- ======================================================================  
--- V 1.1  2012 by Cristian Martinez <me-at-martinec.org>
--- You can redistribute and/or modify this under the terms of the WTFPL
+-- V 1.2  2017 by Cristian Martinez <me@martinec.org>
 -- ======================================================================
 
 -- SQLite--------------------B
@@ -18,80 +17,78 @@
 --
 .separator "\t"
 
-.import ./allCountries.txt tab_geoname
+.import ./db/allCountries.txt tab_geoname
 
-.import ./alternateNames.txt tab_altname
+.import ./db/alternateNames.txt tab_altname
 
-.import ./iso-languagecodes.txt tab_language
+.import ./db/iso-languagecodes.txt tab_language
 
-.import ./admin1CodesASCII.txt tab_admin1
+.import ./db/admin1CodesASCII.txt tab_admin1
 
-.import ./admin2Codes.txt tab_admin2
+.import ./db/admin2Codes.txt tab_admin2
 
-.import ./featureCodes_en.txt tab_fcode
+.import ./db/featureCodes_en.txt tab_fcode
 
-.import ./hierarchy.txt tab_hierarchy
+.import ./db/hierarchy.txt tab_hierarchy
 
-.import ./timeZones.txt tab_timezone
+.import ./db/timeZones.txt tab_timezone
 
-.import ./countryInfo.txt tab_country
+.import ./db/countryInfo.txt tab_country
 
-.import ./divisionInfo.tsv tab_division
+.import ./db/continentCodes.txt tab_continent
 
-.import ./continentCodes.txt tab_continent
+.import ./db/allPostalCodes.txt tab_postalcode
 
-.import ./allPostalCodes.txt tab_postalcode
-
---LOAD DATA INFILE './allCountries.txt' 
+--LOAD DATA INFILE './db/allCountries.txt' 
           --INTO TABLE tab_geoname
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
 
 
---LOAD DATA INFILE './alternateNames.txt' 
+--LOAD DATA INFILE './db/alternateNames.txt' 
           --INTO TABLE tab_altname
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
 
 
---LOAD DATA INFILE './iso-languagecodes.txt' 
+--LOAD DATA INFILE './db/iso-languagecodes.txt' 
           --INTO TABLE tab_language
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
 
 
---LOAD DATA INFILE './admin1CodesASCII.txt' 
+--LOAD DATA INFILE './db/admin1CodesASCII.txt' 
           --INTO TABLE tab_admin1
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
 
---LOAD DATA INFILE './admin2Codes.txt' 
+--LOAD DATA INFILE './db/admin2Codes.txt' 
           --INTO TABLE tab_admin2
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
 
---LOAD DATA INFILE './featureCodes_en.txt' 
+--LOAD DATA INFILE './db/featureCodes_en.txt' 
           --INTO TABLE tab_fcode
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
 
 
---LOAD DATA INFILE './hierarchy.txt' 
+--LOAD DATA INFILE './db/hierarchy.txt' 
           --INTO TABLE tab_hierarchy
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
 
---LOAD DATA INFILE './timeZones.txt' 
+--LOAD DATA INFILE './db/timeZones.txt' 
           --INTO TABLE tab_timezone
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
           
---LOAD DATA INFILE './countryInfo.txt' 
+--LOAD DATA INFILE './db/countryInfo.txt' 
           --INTO TABLE tab_country
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';
 
---LOAD DATA INFILE './continentCodes.txt' 
+--LOAD DATA INFILE './db/continentCodes.txt' 
           --INTO TABLE tab_continent
           --FIELDS TERMINATED BY '\t' 
           --LINES TERMINATED BY '\n';                                 

@@ -1,8 +1,11 @@
+#!/bin/bash
+
+pushd db
+
 # allCountries.zip
 wget -N http://download.geonames.org/export/dump/allCountries.zip 
-rm -f allCountries.txt
 unzip allCountries.zip
-rm -f  allCountries.zip
+rm  allCountries.zip
 #sed -i '/\x27/s/"/\x27\x27/g'  allCountries.txt
 #sed -i '/”/s/"/\x27\x27/g'  allCountries.txt
 #sed -i '/[^\t]*"[^\t]*[^\t]*"/s/"/\x27\x27/g' allCountries.txt
@@ -11,13 +14,13 @@ sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' allCountries.txt
 
 # alternateNames.zip
 wget -N http://download.geonames.org/export/dump/alternateNames.zip
-rm -f alternateNames.txt
 unzip alternateNames.zip
-rm -f alternateNames.zip
+rm alternateNames.zip
 #sed -i '/\x27/s/"/\x27\x27/g' alternateNames.txt
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' alternateNames.txt
 
 # iso-languagecodes
+# already included within alternateNames.zip
 # wget -N http://download.geonames.org/export/dump/iso-languagecodes.txt
 sed -i '1d' iso-languagecodes.txt
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' iso-languagecodes.txt
@@ -37,9 +40,9 @@ sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' featureCodes_en.txt
 
 # hierarchy
 wget -N http://download.geonames.org/export/dump/hierarchy.zip
-rm -f hierarchy.txt
+rm hierarchy.txt
 unzip hierarchy.zip
-rm -f hierarchy.zip
+rm hierarchy.zip
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' hierarchy.txt
 
 # timeZones
@@ -50,7 +53,7 @@ sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' timeZones.txt
 # countryInfo
 wget -N -O countryData.txt http://download.geonames.org/export/dump/countryInfo.txt 
 cat countryData.txt | grep -v "^#" > countryInfo.txt
-rm -f countryData.txt
+rm countryData.txt
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' countryInfo.txt
 
 
@@ -65,12 +68,15 @@ AN\tAntarctica\t6255152" > continentCodes.txt
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' continentCodes.txt
 
 # postal codes
-wget -N -O allPostalCodes.zip http://download.geonames.org/export/zip/allCountries.zip  
+wget -N -O allPostalCodes.zip http://download.geonames.org/export/zip/allCountries.zip
 unzip allPostalCodes.zip -d /tmp
 mv /tmp/allCountries.txt ./allPostalCodes.txt
+rm allPostalCodes.zip
 sed -i 's/"/""/g ; s/^/\"/ ; s/$/\"/ ; s/\t/\"\t\"/g' allPostalCodes.txt
-rm -f allCountries.zip
 
-rm -f GeoNames.sqlite
-sqlite3 GeoNames.sqlite < geonames-sqlite_scheme.sql 
-sqlite3 GeoNames.sqlite < geonames-sqlite_load.sql
+popd
+
+rm GeoNames17.db
+sqlite3 GeoNames17.db < geonames-sqlite-scheme.sql 
+sqlite3 GeoNames17.db < geonames-sqlite-load.sql
+sqlite3 GeoNames17.db < geonames-sqlite-load-extra.sql
