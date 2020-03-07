@@ -1166,7 +1166,7 @@ sub dic_PopulatedPlaces($$){
               AND  g.country_iso IN ($countries)
               AND  c.country_iso = g.country_iso";
 
-	my $tSemantic = "";
+	my $tSemantic = mCity;
 	fetchprint_sql 	$dbh,$sql, $tSemantic;
 }
 # ======================================================================
